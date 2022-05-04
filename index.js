@@ -21,7 +21,6 @@ async function run() {
 		await client.connect()
 		console.log('Database Connencted')
 		const productCollection = client.db('warehouse').collection('bike')
-		console.log(productCollection)
 
 		app.get('/items', async (req, res) => {
 			const query = {}
@@ -29,11 +28,10 @@ async function run() {
 			const products = await cursor.toArray()
 			res.send(products)
 		})
-		app.get('/itemDetail/id', async (req, res) => {
+		app.get('/itemDetail/:id', async (req, res) => {
 			const id = req.params.id
 			const query = { _id: ObjectId(id) }
-			const cursor = productCollection.findOne(query)
-			const item = await cursor.toArray()
+			const item = await productCollection.findOne(query)
 			res.send(item)
 		})
 	} finally {
