@@ -36,6 +36,13 @@ async function run() {
 			const item = await productCollection.findOne(query)
 			res.send(item)
 		})
+		// delete method to delete single item
+		app.delete('/item/:id', async (req, res) => {
+			const id = req.params.id
+			const query = { _id: ObjectId(id) }
+			const result = await productCollection.deleteOne(query)
+			res.send(result)
+		})
 	} finally {
 	}
 }
