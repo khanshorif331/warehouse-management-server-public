@@ -22,12 +22,14 @@ async function run() {
 		console.log('Database Connencted')
 		const productCollection = client.db('warehouse').collection('bike')
 
+		// get req to find all items
 		app.get('/items', async (req, res) => {
 			const query = {}
 			const cursor = productCollection.find()
 			const products = await cursor.toArray()
 			res.send(products)
 		})
+		// get req to find a single product detail with id
 		app.get('/itemDetail/:id', async (req, res) => {
 			const id = req.params.id
 			const query = { _id: ObjectId(id) }
