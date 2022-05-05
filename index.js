@@ -24,10 +24,17 @@ async function run() {
 
 		// get req to find all items
 		app.get('/items', async (req, res) => {
+			const limit = Number(req.query.limit)
+			const pageNumber = Number(req.query.pageNumber)
+			console.log(limit, pageNumber)
 			const query = {}
 			const cursor = productCollection.find()
-			const products = await cursor.toArray()
-			res.send(products)
+			const products = await cursor
+				.skip(pageNumber * limit)
+				.limit(limit)
+				.toArray()
+			const count = await productCollection.estimatedDocumentCount()
+			res.send({ success: true, data: products, count })
 		})
 		// get req to find a single product detail with id
 		app.get('/itemDetail/:id', async (req, res) => {
