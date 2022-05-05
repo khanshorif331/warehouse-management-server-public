@@ -43,6 +43,12 @@ async function run() {
 			const result = await productCollection.deleteOne(query)
 			res.send(result)
 		})
+		app.post('/items', async (req, res) => {
+			const data = req.body
+			const result = await productCollection.insertOne(data)
+			res.send(result)
+			console.log(req.body)
+		})
 	} finally {
 	}
 }
