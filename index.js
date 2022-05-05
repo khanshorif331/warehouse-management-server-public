@@ -43,11 +43,19 @@ async function run() {
 			const result = await productCollection.deleteOne(query)
 			res.send(result)
 		})
+		// post method to create new items
 		app.post('/items', async (req, res) => {
-			const data = req.body
-			const result = await productCollection.insertOne(data)
+			// console.log(req.body)
+			const item = req.body
+			// console.log(item)
+			if (!item.price || !item.quantity) {
+				return res.send({
+					success: false,
+					error: 'Please provide a positive number!',
+				})
+			}
+			const result = await productCollection.insertOne(item)
 			res.send(result)
-			console.log(req.body)
 		})
 	} finally {
 	}
