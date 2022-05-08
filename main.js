@@ -85,7 +85,7 @@ async function run() {
 
 		// put method to update items quantity
 		app.put('/itemDetail/:id', async (req, res) => {
-			console.log(req.body)
+			console.log(req.body, typeof req.body.quantity)
 			const id = req.params.id
 			const quantity = req.body
 			// console.log(quantity)
@@ -93,7 +93,6 @@ async function run() {
 			const options = { upsert: true }
 			const updatedDoc = {
 				$set: quantity,
-				// quantity :
 			}
 			const result = await productCollection.updateOne(
 				filter,
