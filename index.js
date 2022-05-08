@@ -3,6 +3,7 @@ const app = express()
 require('dotenv').config()
 const cors = require('cors')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
+const res = require('express/lib/response')
 const port = process.env.PORT || 5000
 
 // middleware
@@ -43,6 +44,17 @@ async function run() {
 			const item = await productCollection.findOne(query)
 			res.send(item)
 		})
+
+		// get method to load myitem data
+		app.get('/myitem', async (req, res) => {
+			console.log(req.query)
+			const email = req.query.email
+			const query = { email }
+			const cursor = productCollection.find(query)
+			const myItems = await cursor.toArray()
+			res.send(myItems)
+		})
+
 		// delete method to delete single item
 		app.delete('/item/:id', async (req, res) => {
 			const id = req.params.id
@@ -52,6 +64,7 @@ async function run() {
 		})
 		// post method to create new items
 		app.post('/items', async (req, res) => {
+			console.log(req.body)
 			const item = req.body
 			console.log(item)
 			if (Number(item.price) < 0 || Number(item.quantity) < 0) {
@@ -61,7 +74,7 @@ async function run() {
 					error: 'Please provide a positive number!',
 				})
 			} else {
-				console.log('from else')
+				console.log('from else', item)
 				const result = await productCollection.insertOne(item)
 				return res.send({
 					success: true,
@@ -74,7 +87,7 @@ async function run() {
 			console.log(req.body)
 			const id = req.params.id
 			const quantity = req.body
-			console.log(quantity)
+			// console.log(quantity)
 			const filter = { _id: ObjectId(id) }
 			const options = { upsert: true }
 			const updatedDoc = {
