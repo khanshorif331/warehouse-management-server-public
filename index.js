@@ -27,7 +27,6 @@ async function run() {
 		app.get('/items', async (req, res) => {
 			const limit = Number(req.query.limit)
 			const pageNumber = Number(req.query.pageNumber)
-			console.log(limit, pageNumber)
 			const query = {}
 			const cursor = productCollection.find()
 			const products = await cursor
@@ -47,7 +46,6 @@ async function run() {
 
 		// get method to load myitem data
 		app.get('/myitem', async (req, res) => {
-			console.log(req.query)
 			const email = req.query.email
 			const query = { email }
 			const cursor = productCollection.find(query)
@@ -66,7 +64,6 @@ async function run() {
 		app.post('/items', async (req, res) => {
 			console.log(req.body)
 			const item = req.body
-			console.log(item)
 			if (Number(item.price) < 0 || Number(item.quantity) < 0) {
 				console.log(item.quantity, item.price)
 				return res.send({
@@ -74,7 +71,6 @@ async function run() {
 					error: 'Please provide a positive number!',
 				})
 			} else {
-				console.log('from else', item)
 				const result = await productCollection.insertOne(item)
 				return res.send({
 					success: true,
