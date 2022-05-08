@@ -2,10 +2,10 @@
   "name": "warehouse-management-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "index.js",
-    "start-dev": "nodemon index.js",
+    "start": "main.js",
+    "start-dev": "nodemon main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
