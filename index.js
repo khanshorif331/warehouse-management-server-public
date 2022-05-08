@@ -45,6 +45,9 @@ async function run() {
 			const item = await productCollection.findOne(query)
 			res.send(item)
 		})
+		app.get('/', (req, res) => {
+			res.send('Server is running')
+		})
 
 		// get method to load myitem data
 		app.get('/myitem', async (req, res) => {
@@ -103,10 +106,6 @@ async function run() {
 	}
 }
 run().catch(console.dir)
-
-app.get('/', (req, res) => {
-	res.send('Server is running')
-})
 
 app.listen(port, () => {
 	console.log('Listening to port', port)
