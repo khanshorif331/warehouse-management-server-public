@@ -25,6 +25,10 @@ async function run() {
 		console.log('Database Connencted')
 		const productCollection = client.db('warehouse').collection('bike')
 
+		app.get('/', (req, res) => {
+			res.send('Server is running')
+		})
+
 		// get req to find all items
 		app.get('/items', async (req, res) => {
 			const limit = Number(req.query.limit)
@@ -44,9 +48,6 @@ async function run() {
 			const query = { _id: ObjectId(id) }
 			const item = await productCollection.findOne(query)
 			res.send(item)
-		})
-		app.get('/', (req, res) => {
-			res.send('Server is running')
 		})
 
 		// get method to load myitem data
