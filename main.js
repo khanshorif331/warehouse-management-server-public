@@ -67,7 +67,6 @@ async function run() {
 		})
 		// post method to create new items
 		app.post('/items', async (req, res) => {
-			console.log(req.body)
 			const item = req.body
 			if (Number(item.price) < 0 || Number(item.quantity) < 0) {
 				console.log(item.quantity, item.price)
@@ -85,10 +84,8 @@ async function run() {
 
 		// put method to update items quantity
 		app.put('/itemDetail/:id', async (req, res) => {
-			console.log(req.body, typeof req.body.quantity)
 			const id = req.params.id
 			const quantity = req.body
-			// console.log(quantity)
 			const filter = { _id: ObjectId(id) }
 			const options = { upsert: true }
 			const updatedDoc = {
